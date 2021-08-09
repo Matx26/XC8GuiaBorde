@@ -53,7 +53,7 @@ void ConfigOscillator(void)
 /*****************************************************************************/
 void ConfigPorts(void)
 {
-    ANSEL = 0x00;   //Todo el puerto A como digital I/O
+    ANSEL = 0x00;   //Todo el puertos analogicos como digital I/O
     PORTA = 0x00;   // ponemos a cero todo el puerto A
     PORTB = 0x00;   //ponemos a cero todo el puerto B
     
