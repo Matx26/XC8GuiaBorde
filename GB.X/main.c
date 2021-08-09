@@ -89,7 +89,7 @@ void main(void)
     __delay_ms(1000);
     Lcd_Set_Cursor(1,2);
     Lcd_Write_String("Soy Matias");
-    __delay_ms(1000);
+    __delay_ms(1200);
     while(1)
     {
     

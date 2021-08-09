@@ -805,8 +805,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 91:     Lcd_Write_String("Soy Matias");
 [e ( _Lcd_Write_String (1 :s 2C ]
 "92
-[; ;main.c: 92:     _delay((unsigned long)((1000)*(2000000/4000.0)));
-[e ( __delay (1 -> * -> -> 1000 `i `d / -> -> 2000000 `l `d .4000.0 `ul ]
+[; ;main.c: 92:     _delay((unsigned long)((1200)*(2000000/4000.0)));
+[e ( __delay (1 -> * -> -> 1200 `i `d / -> -> 2000000 `l `d .4000.0 `ul ]
 "93
 [; ;main.c: 93:     while(1)
 [e :U 121 ]

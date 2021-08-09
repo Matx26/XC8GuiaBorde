@@ -1884,7 +1884,7 @@ void main(void)
     _delay((unsigned long)((1000)*(2000000/4000.0)));
     Lcd_Set_Cursor(1,2);
     Lcd_Write_String("Soy Matias");
-    _delay((unsigned long)((1000)*(2000000/4000.0)));
+    _delay((unsigned long)((1200)*(2000000/4000.0)));
     while(1)
     {
 
