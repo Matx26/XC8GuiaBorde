@@ -1533,8 +1533,7 @@ extern __bank0 unsigned char __resetbits;
 extern __bank0 __bit __powerdown;
 extern __bank0 __bit __timeout;
 # 28 "C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\\pic\\include\\xc.h" 2 3
-# 22 "main.c" 2
-
+# 23 "main.c" 2
 # 1 "./ConfigBits.h" 1
 # 13 "./ConfigBits.h"
 #pragma config FOSC = INTOSCIO
@@ -1551,8 +1550,7 @@ extern __bank0 __bit __timeout;
 
 #pragma config FCMEN = OFF
 #pragma config IESO = OFF
-# 23 "main.c" 2
-
+# 24 "main.c" 2
 # 1 "./lcd_16x4.h" 1
 # 39 "./lcd_16x4.h"
 void Lcd_Port(char a)
@@ -1737,8 +1735,7 @@ void Lcd_Shift_Left()
  Lcd_Cmd(0x01);
  Lcd_Cmd(0x08);
 }
-# 24 "main.c" 2
-
+# 25 "main.c" 2
 # 1 "C:\\Program Files\\Microchip\\xc8\\v2.32\\pic\\include\\c90\\stdio.h" 1 3
 
 
@@ -1836,7 +1833,7 @@ extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupport
 #pragma printf_check(sprintf) const
 extern int sprintf(char *, const char *, ...);
 extern int printf(const char *, ...);
-# 25 "main.c" 2
+# 26 "main.c" 2
 # 43 "main.c"
 void ConfigOscillator(void)
 {
