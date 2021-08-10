@@ -796,8 +796,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 88:     Lcd_Write_String("Hola Mundo");
 [e ( _Lcd_Write_String (1 :s 1C ]
 "89
-[; ;main.c: 89:     _delay((unsigned long)((1200)*(2000000/4000.0)));
-[e ( __delay (1 -> * -> -> 1200 `i `d / -> -> 2000000 `l `d .4000.0 `ul ]
+[; ;main.c: 89:     _delay((unsigned long)((100)*(2000000/4000.0)));
+[e ( __delay (1 -> * -> -> 100 `i `d / -> -> 2000000 `l `d .4000.0 `ul ]
 "90
 [; ;main.c: 90:     Lcd_Set_Cursor(1,2);
 [e ( _Lcd_Set_Cursor (2 , -> -> 1 `i `uc -> -> 2 `i `uc ]
