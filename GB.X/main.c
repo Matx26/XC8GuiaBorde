@@ -86,7 +86,7 @@ void main(void)
     
     Lcd_Set_Cursor(1,1);
     Lcd_Write_String("Hola Mundo");
-    __delay_ms(1000);
+    __delay_ms(1200);
     Lcd_Set_Cursor(1,2);
     Lcd_Write_String("Soy Matias");
     __delay_ms(1000);
