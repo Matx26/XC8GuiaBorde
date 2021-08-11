@@ -1092,8 +1092,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;main.c: 184:             AutMan = 0;
 [e = _AutMan -> 0 `i ]
 "185
-[; ;main.c: 185:             INTCONbits.RBIE = 1;
-[e = . . _INTCONbits 0 3 -> -> 1 `i `uc ]
+[; ;main.c: 185:             INTCONbits.RBIE = 0;
+[e = . . _INTCONbits 0 3 -> -> 0 `i `uc ]
 "187
 [; ;main.c: 187:             if(PORTAbits.RA6 == 1)
 [e $ ! == -> . . _PORTAbits 0 6 `i -> 1 `i 134  ]
@@ -1130,81 +1130,77 @@ Version 4.0 HI-TECH Software Intermediate Code
 }
 [e $U 136  ]
 "199
-[; ;main.c: 199:             else
+[; ;main.c: 199:             else{PORTAbits.RA4 = 0;
 [e :U 134 ]
-"200
-[; ;main.c: 200:             {
 {
-"201
-[; ;main.c: 201:                 PORTAbits.RA4 = 0;
 [e = . . _PORTAbits 0 4 -> -> 0 `i `uc ]
-"202
-[; ;main.c: 202:             }
+"200
+[; ;main.c: 200:             }
 }
 [e :U 136 ]
-"204
-[; ;main.c: 204:             if(PORTAbits.RA5 == 1)
+"202
+[; ;main.c: 202:             if(PORTAbits.RA5 == 1)
 [e $ ! == -> . . _PORTAbits 0 5 `i -> 1 `i 137  ]
-"205
-[; ;main.c: 205:             {
+"203
+[; ;main.c: 203:             {
 {
-"206
-[; ;main.c: 206:                 _delay((unsigned long)((20)*(2000000/4000.0)));
+"204
+[; ;main.c: 204:                 _delay((unsigned long)((20)*(2000000/4000.0)));
 [e ( __delay (1 -> * -> -> 20 `i `d / -> -> 2000000 `l `d .4000.0 `ul ]
-"207
-[; ;main.c: 207:                 Count ++;
+"205
+[; ;main.c: 205:                 Count ++;
 [e ++ _Count -> 1 `i ]
-"208
-[; ;main.c: 208:                 if(Count >= 5)
+"206
+[; ;main.c: 206:                 if(Count >= 5)
 [e $ ! >= _Count -> 5 `i 138  ]
-"209
-[; ;main.c: 209:                 {
+"207
+[; ;main.c: 207:                 {
 {
-"210
-[; ;main.c: 210:                     Count = 0;
+"208
+[; ;main.c: 208:                     Count = 0;
 [e = _Count -> 0 `i ]
-"211
-[; ;main.c: 211:                     PORTAbits.RA4 = 0;
+"209
+[; ;main.c: 209:                     PORTAbits.RA4 = 0;
 [e = . . _PORTAbits 0 4 -> -> 0 `i `uc ]
-"212
-[; ;main.c: 212:                     PORTAbits.RA2 = 1;
+"210
+[; ;main.c: 210:                     PORTAbits.RA2 = 1;
 [e = . . _PORTAbits 0 2 -> -> 1 `i `uc ]
-"213
-[; ;main.c: 213:                 }
+"211
+[; ;main.c: 211:                 }
 }
 [e :U 138 ]
-"214
-[; ;main.c: 214:             }
+"212
+[; ;main.c: 212:             }
 }
 [e $U 139  ]
-"215
-[; ;main.c: 215:             else
+"213
+[; ;main.c: 213:             else
 [e :U 137 ]
-"216
-[; ;main.c: 216:             {
+"214
+[; ;main.c: 214:             {
 {
-"217
-[; ;main.c: 217:                 PORTAbits.RA2 = 0;
+"215
+[; ;main.c: 215:                 PORTAbits.RA2 = 0;
 [e = . . _PORTAbits 0 2 -> -> 0 `i `uc ]
-"218
-[; ;main.c: 218:             }
+"216
+[; ;main.c: 216:             }
 }
 [e :U 139 ]
-"219
-[; ;main.c: 219:         }
+"217
+[; ;main.c: 217:         }
 }
 [e :U 133 ]
-"223
-[; ;main.c: 223:     }
+"221
+[; ;main.c: 221:     }
 }
 [e :U 124 ]
 [e $U 125  ]
 [e :U 126 ]
-"224
-[; ;main.c: 224: return;
+"222
+[; ;main.c: 222: return;
 [e $UE 123  ]
-"225
-[; ;main.c: 225: }
+"223
+[; ;main.c: 223: }
 [e :UE 123 ]
 }
 [a 2C 83 111 121 32 77 97 116 105 97 115 0 ]

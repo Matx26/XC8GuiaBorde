@@ -182,7 +182,7 @@ void main(void)
         else
         {
             AutMan = 0;   //indicamos que no esta en modo manual
-            INTCONbits.RBIE = 1;    //deshabilitamos la interrupcion por cambio de RB7 (foto celula)
+            INTCONbits.RBIE = 0;    //deshabilitamos la interrupcion por cambio de RB7 (foto celula)
             
             if(BT_UpRight == 1)
             {
@@ -196,9 +196,7 @@ void main(void)
                 }
                 
             }
-            else
-            {
-                LED_Right = 0;  //apagamos la bobina derecha
+            else{LED_Right = 0;  //apagamos la bobina derecha
             }
             
             if(BT_DownLeft == 1)

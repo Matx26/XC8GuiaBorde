@@ -1983,7 +1983,7 @@ void main(void)
         else
         {
             AutMan = 0;
-            INTCONbits.RBIE = 1;
+            INTCONbits.RBIE = 0;
 
             if(PORTAbits.RA6 == 1)
             {
@@ -1997,9 +1997,7 @@ void main(void)
                 }
 
             }
-            else
-            {
-                PORTAbits.RA4 = 0;
+            else{PORTAbits.RA4 = 0;
             }
 
             if(PORTAbits.RA5 == 1)
