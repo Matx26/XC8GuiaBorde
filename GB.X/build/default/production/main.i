@@ -1535,6 +1535,7 @@ extern __bank0 __bit __timeout;
 # 28 "C:/Program Files/Microchip/MPLABX/v5.50/packs/Microchip/PIC16Fxxx_DFP/1.2.33/xc8\\pic\\include\\xc.h" 2 3
 # 22 "main.c" 2
 
+
 # 1 "./ConfigBits.h" 1
 # 13 "./ConfigBits.h"
 #pragma config FOSC = INTOSCIO
@@ -1551,7 +1552,7 @@ extern __bank0 __bit __timeout;
 
 #pragma config FCMEN = OFF
 #pragma config IESO = OFF
-# 23 "main.c" 2
+# 24 "main.c" 2
 
 # 1 "./lcd_16x4.h" 1
 # 39 "./lcd_16x4.h"
@@ -1737,7 +1738,7 @@ void Lcd_Shift_Left()
  Lcd_Cmd(0x01);
  Lcd_Cmd(0x08);
 }
-# 24 "main.c" 2
+# 25 "main.c" 2
 
 # 1 "C:\\Program Files\\Microchip\\xc8\\v2.32\\pic\\include\\c90\\stdio.h" 1 3
 
@@ -1836,8 +1837,16 @@ extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupport
 #pragma printf_check(sprintf) const
 extern int sprintf(char *, const char *, ...);
 extern int printf(const char *, ...);
-# 25 "main.c" 2
-# 43 "main.c"
+# 26 "main.c" 2
+# 41 "main.c"
+int AutMan = 0;
+char FotoCelula = 0;
+int CountSteps = 0;
+
+
+
+
+
 void ConfigOscillator(void)
 {
     OSCCONbits.IRCF = 0b111;
@@ -1875,12 +1884,43 @@ void ConfigPorts(void)
 }
 
 
+
+
+void _interrupt()
+{
+    if(INTCONbits.RBIF == 1)
+    {
+        FotoCelula = 1;
+        INTCONbits.RBIF = 0;
+    }
+
+    if(INTCONbits.INTF == 1)
+    {
+        CountSteps ++;
+        INTCONbits.INTF = 0;
+    }
+}
+
+
+void Retardo(void)
+{
+    _delay((unsigned long)((100)*(2000000/4000.0)));
+
+}
+
+
 void main(void)
 {
+
+    int Count = 0;
+    int Steps = 5;
+
+
     ConfigOscillator();
     ConfigPorts();
     Lcd_Init();
     Lcd_Clear();
+
 
     Lcd_Set_Cursor(1,1);
     Lcd_Write_String("Hola Mundo");
@@ -1888,8 +1928,98 @@ void main(void)
     Lcd_Set_Cursor(1,2);
     Lcd_Write_String("Soy Matias");
     _delay((unsigned long)((1000)*(2000000/4000.0)));
+
+
+    INTCONbits.GIE = 1;
+
+    OPTION_REGbits.INTEDG = 0;
+    INTCONbits.INTF = 0;
+    INTCONbits.INTE = 0;
+
+    INTCONbits.RBIF = 0;
+    INTCONbits.RBIE = 0;
+
+
     while(1)
     {
+        if(PORTAbits.RA0 == 1)
+        {
+            AutMan = 1;
+            INTCONbits.RBIE = 1;
+            if(FotoCelula == 1 || PORTBbits.RB7 == 1)
+            {
+                if(PORTAbits.RA1 == 1)
+                {
+                    PORTAbits.RA2 = 0;
+                    PORTAbits.RA4 = 1;
+                    INTCONbits.INTE = 1;
+                    if(CountSteps >= Steps)
+                    {
+                        PORTAbits.RA4 = 0;
+                        PORTAbits.RA2 = 0;
+                        INTCONbits.INTE = 0;
+                        CountSteps = 0;
+                        Retardo();
+                    }
+                }
+                else
+                {
+                    PORTAbits.RA4 = 0;
+                    PORTAbits.RA2 = 1;
+                    INTCONbits.INTE = 1;
+                    if(CountSteps >= Steps)
+                    {
+                        PORTAbits.RA4 = 0;
+                        PORTAbits.RA2 = 0;
+                        INTCONbits.INTE = 0;
+                        CountSteps = 0;
+                        Retardo();
+                    }
+
+                }
+            }
+
+        }
+        else
+        {
+            AutMan = 0;
+            INTCONbits.RBIE = 1;
+
+            if(PORTAbits.RA6 == 1)
+            {
+                _delay((unsigned long)((20)*(2000000/4000.0)));
+                Count ++;
+                if(Count >= 5)
+                {
+                    Count = 0;
+                    PORTAbits.RA2 = 0;
+                    PORTAbits.RA4 = 1;
+                }
+
+            }
+            else
+            {
+                PORTAbits.RA4 = 0;
+            }
+
+            if(PORTAbits.RA5 == 1)
+            {
+                _delay((unsigned long)((20)*(2000000/4000.0)));
+                Count ++;
+                if(Count >= 5)
+                {
+                    Count = 0;
+                    PORTAbits.RA4 = 0;
+                    PORTAbits.RA2 = 1;
+                }
+            }
+            else
+            {
+                PORTAbits.RA2 = 0;
+            }
+        }
+
+
 
     }
 return;
