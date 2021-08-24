@@ -1912,8 +1912,12 @@ void Retardo(void)
 void main(void)
 {
 
-    int Count = 0;
-    int Steps = 5;
+    int Count = 0, Count_Menu = 0;
+    int Steps = 50;
+    int Delay = 30;
+    char s[20];
+    char menu = 0;
+
 
 
     ConfigOscillator();
@@ -1924,10 +1928,16 @@ void main(void)
 
     Lcd_Set_Cursor(1,1);
     Lcd_Write_String("Hola Mundo");
-    _delay((unsigned long)((100)*(2000000/4000.0)));
     Lcd_Set_Cursor(1,2);
     Lcd_Write_String("Soy Matias");
     _delay((unsigned long)((1000)*(2000000/4000.0)));
+
+    sprintf(s,"Steps  ->%3d[un]",Steps);
+    Lcd_Set_Cursor(1,1);
+    Lcd_Write_String(s);
+    sprintf(s,"Delay    %3d[ms]",Delay);
+    Lcd_Set_Cursor(1,2);
+    Lcd_Write_String(s);
 
 
     INTCONbits.GIE = 1;
@@ -1942,6 +1952,44 @@ void main(void)
 
     while(1)
     {
+        if(PORTAbits.RA7 == 1)
+        {
+            Count_Menu ++;
+            _delay((unsigned long)((10)*(2000000/4000.0)));
+            if(Count_Menu >= 5)
+            {
+                if(menu == 1)
+                {
+                    menu = 0;
+                    Lcd_Set_Cursor(8,2);
+                    Lcd_Write_String("  ");
+                    Lcd_Set_Cursor(8,1);
+                    Lcd_Write_String("->");
+                }
+                else
+                {
+                    menu = 1;
+                    Lcd_Set_Cursor(8,1);
+                    Lcd_Write_String("  ");
+                    Lcd_Set_Cursor(8,2);
+                    Lcd_Write_String("->");
+                }
+            }
+            else
+            {
+                Count_Menu = 0;
+            }
+
+        }
+
+        if(PORTAbits.RA5 == 1)
+        {
+
+
+        }
+
+
+
         if(PORTAbits.RA0 == 1)
         {
             AutMan = 1;
@@ -1977,6 +2025,10 @@ void main(void)
                     }
 
                 }
+            }
+            else
+            {
+                FotoCelula = 0;
             }
 
         }

@@ -89,7 +89,7 @@ void _interrupt()
 {
     if(INTCONbits.RBIF == 1)    //pregunto si la fotocelula se activo 
     {
-        FotoCelula = 1; //se activo la fotocelula
+        FotoCelula = 1; //indicamos que se activo la fotocelula
         INTCONbits.RBIF = 0;    //se borra el flag 
     }
     
@@ -111,22 +111,32 @@ void Retardo(void)
 void main(void) 
 {
     //declaracion de variables locales
-    int Count = 0;  //se usa para el sistema atirrebote
-    int Steps = 5; //configuracion de la cantidad de pasos (steps)
-    
+    int Count = 0, Count_Menu = 0;  //se usa para el sistema atirrebote
+    int Steps = 50; //configuracion de la cantidad de pasos (steps)
+    int Delay = 30; //cantidad de retardo
+    char s[20]; //se usa para imprimir en el LCD
+    char menu = 0;  //menu = 0 -> se hab. la modificacion de los Steps
+                    //menu = 1 -> se hab. la modificacion del Delay
+                    
     
     ConfigOscillator();     //llamo a la funcion que configura el oscilador
     ConfigPorts();      //llamo a la funcion que configura los puertos
     Lcd_Init();     //inicializamos el LCD
     Lcd_Clear();    //limpiamos el LCD
     
-      
+     
     Lcd_Set_Cursor(1,1);
     Lcd_Write_String("Hola Mundo");
-    __delay_ms(100);
     Lcd_Set_Cursor(1,2);
     Lcd_Write_String("Soy Matias");
     __delay_ms(1000);
+    
+    sprintf(s,"Steps  ->%3d[un]",Steps); 
+    Lcd_Set_Cursor(1,1);
+    Lcd_Write_String(s);
+    sprintf(s,"Delay    %3d[ms]",Delay);
+    Lcd_Set_Cursor(1,2);
+    Lcd_Write_String(s);
     
     //Conmfiguracion preliminar de las interrupciones
     INTCONbits.GIE = 1;     //habilito globalmente las interrupciones
@@ -141,6 +151,44 @@ void main(void)
     
     while(1)
     {
+        if(BT_Menu == 1)    //pregunto si se oprimio el boton Menu
+        {
+            Count_Menu ++;
+            __delay_ms(10); 
+            if(Count_Menu >= 5)
+            {
+                if(menu == 1)   //pregunto quien estaba hab para editar
+                {
+                    menu = 0;   //si estaba hab. editar el Delay ahora hab. editar los pasos
+                    Lcd_Set_Cursor(8,2);
+                    Lcd_Write_String("  ");
+                    Lcd_Set_Cursor(8,1);
+                    Lcd_Write_String("->");
+                }
+                else
+                {
+                    menu = 1;   //si estaba hab. editar los pasos ahora hab. editar el retardo
+                    Lcd_Set_Cursor(8,1);
+                    Lcd_Write_String("  ");
+                    Lcd_Set_Cursor(8,2);
+                    Lcd_Write_String("->");
+                }
+            }
+            else
+            {
+                Count_Menu = 0; //Reseteo el contador
+            }    
+            
+        }
+        
+        if(BT_DownLeft == 1)
+        {
+        
+        
+        }
+        
+        
+        
         if(SW_AutoMan == 1)
         {
             AutMan = 1;    //indicamos que esta en modo automatico
@@ -177,11 +225,15 @@ void main(void)
                     
                 }
             }
+            else
+            {
+                FotoCelula = 0; //indicamos que la fotocelula esta apagado
+            }
             
         }
         else
         {
-            AutMan = 0;   //indicamos que no esta en modo manual
+            AutMan = 0;   //indicamos que esta en modo manual
             INTCONbits.RBIE = 0;    //deshabilitamos la interrupcion por cambio de RB7 (foto celula)
             
             if(BT_UpRight == 1)
